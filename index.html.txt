@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>صفحة Nyx الشخصية</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background: #0f0f1a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            padding: 35px 30px;
+            width: 90%;
+            max-width: 450px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255,255,255,0.15);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #00eaff;
+            margin-bottom: 25px;
+        }
+
+        .info {
+            font-size: 18px;
+            margin: 12px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .info span {
+            color: #b2f5ff;
+            font-weight: bold;
+        }
+
+        .category {
+            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ffcc;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="card">
+    <h1>معلومات المبرمج</h1>
+
+    <div class="info">الاسم: <span>Nyx</span></div>
+    <div class="info">العمر: <span>17</span></div>
+    <div class="info">الحالة النفسية: <span>انطوائي</span></div>
+    <div class="info">اللغات: <span>عربي، انجليزي وروسي</span></div>
+
+    <div class="category">الفئة: مبرمج محترف</div>
+</div>
+
+<script>
+    // ===== Particles =====
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    for (let i = 0; i < 80; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 2 + 1,
+            dx: (Math.random() - 0.5) * 0.5,
+            dy: (Math.random() - 0.5) * 0.5
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = "#00eaff";
+            ctx.fill();
+
+            p.x += p.dx;
+            p.y += p.dy;
+
+            if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+        });
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
+
+</body>
+</html>
